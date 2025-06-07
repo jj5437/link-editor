@@ -1,6 +1,6 @@
 import express from 'express';
 import dotenv from 'dotenv';
-import { MongoClient, ObjectId } from 'mongodb';
+import { MongoClient } from 'mongodb';
 import cookieParser from 'cookie-parser';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -8,9 +8,10 @@ import { fileURLToPath } from 'url';
 // Load environment variables
 dotenv.config();
 
-const { MONGO_URI, ADMIN_USER, ADMIN_PASSWORD } = process.env;
+const { MONGO_URI, ADMIN_USER, ADMIN_PASSWORD, API_BASE_URL } = process.env;
 const PORT = process.env.PORT || 3000;
 const AUTH_COOKIE_NAME = 'auth_token';
+const API_PREFIX = API_BASE_URL || '/api';
 
 // ES Module equivalent of __dirname
 const __filename = fileURLToPath(import.meta.url);
@@ -64,7 +65,7 @@ app.post('/logout', (req, res) => {
 });
 
 // GET all users (except admin) and their linkMappings
-app.get('/api/users', authMiddleware, async (req, res) => {
+app.get(`${API_PREFIX}/users`, authMiddleware, async (req, res) => {
     try {
         const users = await db.collection('users').find({
             username: { $ne: 'admin' }
@@ -80,7 +81,7 @@ app.get('/api/users', authMiddleware, async (req, res) => {
 });
 
 // Update a user's linkMappings
-app.post('/api/users/:username', authMiddleware, async (req, res) => {
+app.post(`${API_PREFIX}/users/:username`, authMiddleware, async (req, res) => {
     const { username } = req.params;
     const { linkMappings } = req.body;
 

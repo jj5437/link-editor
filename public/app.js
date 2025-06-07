@@ -1,4 +1,4 @@
-const API_BASE_URL = '/api';
+const API_BASE_URL = '/link-api';
 const USERS_PER_PAGE = 6;
 
 let allUsers = [];
@@ -117,7 +117,6 @@ function renderUsers() {
         userCard.innerHTML = `
             <div class="user-card-header">
                 <h3>${user.username}</h3>
-                <button class="add-link-btn" data-username="${user.username}">+ 添加链接集</button>
             </div>
             <div class="links-wrapper">${linksHtml || '<p class="subtle-text-color">该用户暂无链接，请联系管理员添加链接映射。</p>'}</div>
             <button class="save-btn" data-username="${user.username}">保存 ${user.username} 的链接</button>
