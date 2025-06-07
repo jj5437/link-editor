@@ -1,0 +1,295 @@
+/* --- Global Reset & Root Variables --- */
+:root {
+    --primary-color: #007bff;
+    --primary-hover-color: #0056b3;
+    --background-color: #f4f7fa;
+    --card-background-color: #ffffff;
+    --text-color: #333;
+    --subtle-text-color: #667;
+    --border-color: #e3e8ee;
+    --shadow-color: rgba(0, 0, 0, 0.05);
+    --success-color: #28a745;
+    --danger-color: #dc3545;
+}
+
+/* --- General Body & Layout Styles --- */
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    margin: 0;
+    line-height: 1.6;
+}
+
+.container {
+    width: 100%;
+    min-height: 100vh;
+    box-sizing: border-box;
+}
+
+.dashboard-container {
+    max-width: 1600px;
+    margin: 0 auto;
+    padding: 24px;
+}
+
+/* --- Header & Controls --- */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--card-background-color);
+    padding: 16px 24px;
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 4px 12px var(--shadow-color);
+    margin-bottom: 24px;
+}
+
+.header h1 {
+    margin: 0;
+    font-size: 22px;
+    font-weight: 600;
+}
+
+.header-controls {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+#search-box {
+    padding: 10px 16px;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    background-color: #fff;
+    color: var(--text-color);
+    font-size: 14px;
+    width: 250px;
+    transition: all 0.2s ease-in-out;
+}
+
+#search-box:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.15);
+}
+
+/* --- Buttons --- */
+button {
+    padding: 10px 20px;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+}
+
+#logout-btn {
+    background-color: #eef2f7;
+    color: var(--subtle-text-color);
+    border-color: #d1d9e6;
+}
+#logout-btn:hover {
+    background-color: #e1e6ed;
+    border-color: #c1c9d6;
+}
+
+.save-btn {
+    background-color: var(--primary-color);
+    color: #fff;
+}
+.save-btn:hover {
+    background-color: var(--primary-hover-color);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0, 123, 255, 0.2);
+}
+
+.add-link-btn {
+    background-color: transparent;
+    color: var(--primary-color);
+    border: 1px solid var(--primary-color);
+    padding: 6px 12px;
+    font-size: 12px;
+}
+.add-link-btn:hover {
+    background-color: rgba(0, 123, 255, 0.05);
+}
+
+/* --- User Cards Grid --- */
+#users-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 24px;
+    padding-bottom: 24px;
+}
+
+.user-card {
+    background-color: var(--card-background-color);
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 4px 12px var(--shadow-color);
+    transition: all 0.2s ease-in-out;
+}
+
+.user-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+}
+
+.user-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 16px;
+    margin-bottom: 16px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.user-card-header h3 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.links-wrapper {
+    margin-bottom: 16px;
+    flex-grow: 1;
+}
+
+.links-container {
+    position: relative;
+    margin-bottom: 12px;
+}
+
+.links-container textarea {
+    width: 100%;
+    min-height: 150px;
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+    font-size: 14px;
+    resize: vertical;
+    box-sizing: border-box;
+    background-color: #f9fafb;
+    transition: all 0.2s ease-in-out;
+}
+
+.links-container textarea:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    background-color: #fff;
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+}
+
+.user-card .save-btn {
+    margin-top: auto;
+}
+
+/* --- Pagination Styles --- */
+#pagination-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 16px 0;
+}
+
+.page-btn {
+    background-color: #fff;
+    border: 1px solid var(--border-color);
+    margin: 0 4px;
+    color: var(--primary-color);
+    min-width: 40px;
+}
+.page-btn.active {
+    background-color: var(--primary-color);
+    color: #fff;
+    border-color: var(--primary-color);
+}
+.page-btn:hover:not(.active) {
+    background-color: #f0f6ff;
+}
+.page-btn:disabled {
+    color: #aaa;
+    cursor: not-allowed;
+    background-color: #f8f8f8;
+}
+
+/* --- Login Page --- */
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+.login-box {
+    width: 100%;
+    max-width: 400px;
+    padding: 40px;
+    background-color: var(--card-background-color);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    text-align: center;
+}
+.login-box h2 {
+    margin-bottom: 30px;
+}
+.input-group {
+    position: relative;
+    margin-bottom: 25px;
+    text-align: left;
+}
+.input-group input {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    outline: none;
+    background: transparent;
+    box-sizing: border-box;
+    transition: all 0.2s ease-in-out;
+}
+.input-group label {
+    position: absolute;
+    top: 14px;
+    left: 12px;
+    font-size: 16px;
+    color: var(--subtle-text-color);
+    pointer-events: none;
+    transition: .2s ease all;
+    background-color: var(--card-background-color);
+    padding: 0 4px;
+}
+
+.input-group input:focus ~ label,
+.input-group input:valid ~ label {
+    top: -10px;
+    left: 8px;
+    font-size: 12px;
+    color: var(--primary-color);
+}
+.input-group input:focus {
+    border-color: var(--primary-color);
+}
+
+.login-box button {
+    width: 100%;
+    background-color: var(--primary-color);
+    color: #fff;
+}
+.login-box button:hover {
+    background-color: var(--primary-hover-color);
+}
+.error-message {
+    color: var(--danger-color);
+    height: 20px;
+    margin-top: 15px;
+    font-size: 14px;
+} 

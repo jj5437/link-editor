@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>仪表盘 - 链接编辑器</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="background-shapes"></div>
+    <div class="container dashboard-container">
+        <header class="header">
+            <h1>用户链接映射</h1>
+            <div class="header-controls">
+                <input type="search" id="search-box" placeholder="搜索用户...">
+                <button id="logout-btn">登出</button>
+            </div>
+        </header>
+        <main id="users-container">
+            <!-- User data will be loaded here -->
+        </main>
+        <div id="pagination-container">
+            <!-- Pagination controls will be loaded here -->
+        </div>
+    </div>
+    <script src="app.js" type="module"></script>
+</body>
+</html> 
