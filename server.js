@@ -28,7 +28,14 @@ let db;
 // --- Database Connection ---
 async function connectToDb() {
     try {
-        const client = new MongoClient(MONGO_URI);
+        const client = new MongoClient(MONGO_URI,{
+            serverSelectionTimeoutMS: 5000,
+            heartbeatFrequencyMS: 1000,
+            connectTimeoutMS: 30000,
+            socketTimeoutMS: 360000,
+            retryWrites: true,
+            retryReads: true,
+        });
         await client.connect();
         db = client.db('chat_ldata'); // Use the specific db from the URI
         console.log('Connected to MongoDB');
