@@ -197,9 +197,34 @@ function handleAddLink(event) {
 
 async function handleSave(event) {
     const username = event.target.dataset.username;
-    const textareas = document.querySelectorAll(`.user-card[data-username="${username}"] textarea`);
-    const newLinkMappings = Array.from(textareas).map(ta => ({ links: ta.value }));
     const button = event.target;
+
+    // Find the user from our global cached data
+    const user = allUsers.find(u => u.username === username);
+    if (!user) {
+        alert('错误：找不到原始用户信息，无法保存。');
+        return;
+    }
+
+    // Get the current text areas from the DOM
+    const textareas = document.querySelectorAll(`.user-card[data-username="${username}"] textarea`);
+
+    // Get the original link mappings, or an empty array if it doesn't exist
+    const originalLinkMappings = user.preferences?.linkMappings || [];
+
+    // Construct the new link mappings array, preserving other fields
+    const newLinkMappings = Array.from(textareas).map((textarea, index) => {
+        // Get the original object at this index. It might not exist if a new link set was added.
+        const originalMapping = originalLinkMappings[index] || {};
+        
+        // Create a new object that preserves other fields from the original,
+        // and updates the 'links' field with the value from the textarea.
+        return {
+            ...originalMapping,
+            links: textarea.value
+        };
+    });
+
     const originalText = button.textContent;
     button.textContent = '保存中...';
     button.disabled = true;
@@ -212,6 +237,10 @@ async function handleSave(event) {
         });
 
         if (response.ok) {
+            // IMPORTANT: Update the cached user data locally so the next save has the correct "original" data
+            if (!user.preferences) user.preferences = {};
+            user.preferences.linkMappings = newLinkMappings;
+
             button.textContent = '保存成功!';
             button.style.backgroundColor = 'var(--success-color)';
         } else {

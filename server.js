@@ -90,21 +90,41 @@ app.get(`${API_PREFIX}/users`, authMiddleware, async (req, res) => {
 // Update a user's linkMappings
 app.post(`${API_PREFIX}/users/:username`, authMiddleware, async (req, res) => {
     const { username } = req.params;
-    const { linkMappings } = req.body;
+    const { linkMappings: updatedMappingsFromClient } = req.body;
 
-    if (!Array.isArray(linkMappings)) {
+    if (!Array.isArray(updatedMappingsFromClient)) {
         return res.status(400).json({ message: 'linkMappings must be an array.' });
     }
 
     try {
-        const result = await db.collection('users').updateOne(
-            { username: username },
-            { $set: { 'preferences.linkMappings': linkMappings } }
-        );
+        // Step 1: Read the user's full, original document from the database.
+        const user = await db.collection('users').findOne({ username: username });
 
-        if (result.matchedCount === 0) {
+        if (!user) {
             return res.status(404).json({ message: 'User not found.' });
         }
+
+        // Get the original mappings, ensuring it's an array.
+        const originalMappings = user.preferences?.linkMappings || [];
+
+        // Step 2: Modify the original data with the updates from the client.
+        const newMappings = originalMappings.map((originalMapping, index) => {
+            // If the client sent a corresponding mapping, update its 'links' property.
+            if (updatedMappingsFromClient[index]) {
+                return {
+                    ...originalMapping,
+                    links: updatedMappingsFromClient[index].links
+                };
+            }
+            // Otherwise, return the original mapping untouched.
+            return originalMapping;
+        });
+
+        // Step 3: Write the safely merged, complete data back to the database.
+        const result = await db.collection('users').updateOne(
+            { username: username },
+            { $set: { 'preferences.linkMappings': newMappings } }
+        );
 
         res.status(200).json({ message: 'User updated successfully.' });
     } catch (error) {
